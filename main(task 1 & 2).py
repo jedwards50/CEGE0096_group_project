@@ -8,25 +8,26 @@
 # This software should be run with the given materials, some packages for GIS will need to be imported before running this project.
 
 
-# Task 1. User Input
-
-# In this task, this software should:
-# Ask the user to input their current location as a British National Grid coordinate (easting and northing)
-# Test whether the user is within a box (430000, 80000) and (465000, 95000)
-
-# 1.1 Import required packages for the following steps
+# 0. Import required packages for the following steps
 import math
 from linecache import getline
 import numpy as np
 
 ELEVATION_RADIUS = 5000
 
-# 1.2 Let the user input the easting and northing and test the location
+
+# Task 1. User Input
+
+# In this task, this software should:
+# Ask the user to input their current location as a British National Grid coordinate (easting and northing)
+# Test whether the user is within a box (430000, 80000) and (465000, 95000)
+
+# 1.1 Introduction: 
 print("Extreme flooding is expected on the Isle of Wightand, the authority in charge of planning the emergency response is advising everyone to proceed by foot to the nearest high ground.")
 print("This software will give the quickest route from the user's current location to the highest point within a 5km radius in the chosen area .")
 print("Firstly, let's check whether your location is included in the testing area!")
 
-# 1.2.1 Let the user input the easting of British National Grid and test
+# 1.2 Let the user input the easting of British National Grid and test
 coord=input("Please input easting of British National Grid:\n")
 easting = int(coord)
 if 430000 <= easting <= 465000:
@@ -36,7 +37,7 @@ else:
     print("Easting not in 430000 465000, please inter another easting!")
     exit(0)
 
-# 1.2.2 Let the user input the northing of British National Grid and test
+# 1.3 Let the user input the northing of British National Grid and test
 coord=input("Please input northing of British National Grid:\n")
 northing = int(coord)
 if 80000 <= northing <= 95000:
@@ -46,7 +47,7 @@ else:
     print("Northing not in 80000 95000, please inter another northing!")
     exit(0)
     
-# 1.2.3 Print the point of user's location
+# 1.4 Print the point of user's location
 p = (easting, northing)
 print("According to the British National Grid, the user's location is:")
 print(p)
