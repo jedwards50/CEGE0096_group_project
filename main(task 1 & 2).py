@@ -8,57 +8,47 @@
 # This software should be run with the given materials, some packages for GIS will need to be imported before running this project.
 
 
-# 0. Import required packages for the following steps
+# 0.1 - Import required packages for the following steps
 import math
 from linecache import getline
 import numpy as np
-
 ELEVATION_RADIUS = 5000
 
-
-# Task 1. User Input
-
-# In this task, this software should:
-# Ask the user to input their current location as a British National Grid coordinate (easting and northing)
-# Test whether the user is within a box (430000, 80000) and (465000, 95000)
-
-# 1.1 Introduction: 
+# 0.2 - Title for the software and its background:
 print("**** GEOG0096 Assignement 2 - Flood Emergency Planning - Dragonfly (0.1) ****")
 print()
 print("Extreme flooding is expected on the Isle of Wightand, and the authority in charge of planning the emergency response is advising everyone to proceed by foot to the nearest high ground.")
 print("This software will give the quickest route from the user's current location to the highest point within a 5km radius in the chosen area.")
 print()
+
+
+# Task 1. User Input
+# In this task, this software should:
+# Ask the user to input their current location as a British National Grid coordinate (easting and northing)
+# Test whether the user is within a box (430000, 80000) and (465000, 95000)
+
+# 1.0 - Introduction
 print("Firstly, let's check whether your location is included in the testing area!")
 
-# 1.2 Let the user input the easting of British National Grid and test
-coord = input("Please input easting of British National Grid:\n")
-easting = int(coord)
-if 430000 <= easting <= 465000:
-    pass
-    print("This easting is included in the testing area!")
-else:
-    print("Easting is not in between 430000 and 465000, please inter another easting!")
-    exit(0)
+# 1.1 - Define: Point
+# The user should input the number of both easting and northing to make a point for the location in the following checks.
+class Point:
+    def __init__(self, easting, northing):
+        self.easting = easting
+        self.northing = northing
+        if 430000 <= easting <= 465000 and 80000 <= northing <= 95000:
+            print("This location can be tested by this software!")
+        else:
+            print("This location is outside the testing area! Please enter another location!")
 
-# 1.3 Let the user input the northing of British National Grid and test
-coord = input("Please input northing of British National Grid:\n")
-northing = int(coord)
-if 80000 <= northing <= 95000:
-    pass
-    print("This northing is included in the testing area!")
-else:
-    print("Northing is not in between 80000 and 95000, please inter another northing!")
-    exit(0)
-    
-# 1.4 Print the point of user's location
-p = (easting, northing)
-print("According to the British National Grid, the user's location is:")
-print(p)
-print("This inputted location is included in the testing area, and could be test in the following steps!")
+# 1.2 - Let the user input the easting and northing and test whether the point is in the testing area
+# Notice: the easting and northing should follow the style of British National Grid
+easting = float(input('Please input the value of easting: '))
+northing = float(input('Please input the value of northing: '))
+p = Point(easting, northing)
 
 
 # Task 2. Highest Point Identification
-
 # In this task, this software should:
 # Identify the highest point within a 5km radius from the user location.
 
