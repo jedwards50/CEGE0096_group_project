@@ -1,0 +1,4 @@
+Upload (for new file uploads) e.g. git commit -m "Upload: Script for task 1."
+Feat (for new features added) e.g. git commit -m "Feat: Convert from BNG to latlong."
+Fix (for bug fixes) e.g. git commit -m "Fix: No longer getting a ValueError in Line 32."
+Rename (for renaming files) e.g. git commit -m "Rename: draft_1.py renamed to main.py."
