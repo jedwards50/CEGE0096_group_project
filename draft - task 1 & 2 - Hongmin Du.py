@@ -13,6 +13,7 @@ import numpy as np
 import rasterio
 from rasterio import mask, plot, windows
 from shapely.geometry import Point, Polygon
+import matplotlib.pyplot as plt
 
 # 0.2 - Title for the software and its background:
 print("**** CEGE0096 Assignment 2 - Flood Emergency Planning - Dragonfly (0.1) ****")
@@ -58,24 +59,28 @@ else:
 # Identify the highest point within a 5km radius from the user location.
 
 # 2.0 - Introduction.
-print("Secondly, let's find the highest point within a 5km radius from the user location!")
+print("Next, let's find the highest point within a 5km radius from the user location!"
+      "\n Loading...")
 
 # 2.1 - Open elevation file.
 # NB: Material folder must be stored in working directory. A .gitignore file can be used to ignore this folder
 # when pushing to GitHub. The Material folder cannot be uploaded to GitHub because file sizes are greater than 100MB.
 
-with rasterio.open(os.path.join('Material', 'elevation', 'SZ.asc')) as src:
-    elevation_array = src.read(1, window=rasterio.windows.from_bounds((p.x - 5000.0), (p.y - 5000.0),
-                                                                      (p.x + 5000.0), (p.y + 5000.0),
-                                                                      src.transform))
+src = rasterio.open(os.path.join('Material', 'elevation', 'SZ.asc'))
+elevation_array = src.read(1, window=rasterio.windows.from_bounds((p.x - 5000.0), (p.y - 5000.0),
+                                                                  (p.x + 5000.0), (p.y + 5000.0),
+                                                                  src.transform))
 # Create buffer around point.
-buffer_5km = [p.buffer(5000)]
+buffer_5km = p.buffer(5000)
 
-max_ele_value = np.max(elevation_array)
-max_ele_index = np.where(elevation_array == np.max(elevation_array))
+# Create a tuple of masked numpy ndarray [0] and affinetransform [1]
+buffered_ele = rasterio.mask.mask(dataset=src, shapes=[buffer_5km], crop=True)
 
-print("The maximum elevation within 5km of your point is ", max_ele_value, "it's index (row,column) is", max_ele_index)
-# cropped_elevation_array = rasterio.mask.mask(dataset=elevation_array, nodata=0, shapes=buffer_5km, crop=True,
-# filled=True)
+# Find point of maximum elevation.
+max_ele_value = np.max(buffered_ele[0])
+max_ele_index = np.where(buffered_ele[0] == np.max(buffered_ele[0]))
 
-# rasterio.plot.show(cropped_elevation_array)
+print("The maximum elevation within 5km of your point is ", max_ele_value, "m. It's index is", max_ele_index)
+
+# Plot the buffered raster.
+rasterio.plot.show(buffered_ele[0])
