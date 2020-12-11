@@ -11,7 +11,7 @@
 import os
 
 import rasterio
-from rasterio import windows
+from rasterio import mask, plot, windows
 from shapely.geometry import Point, Polygon
 
 # 0.2 - Title for the software and its background:
@@ -47,7 +47,7 @@ if p.within(testing_area):
     print("This location can be tested by this software!")
 else:
     print("This location is outside the testing area!")
-    quit_or_reenter = input("Type 'q' to quit or 'r' to re-enter.")
+    quit_or_reenter = input("Type 'q' to quit or 'r' to re-enter your co-ordinates.")
     if quit_or_reenter == 'q':
         quit()
     elif quit_or_reenter == 'r':
@@ -63,8 +63,14 @@ print("Secondly, let's find the highest point within a 5km radius from the user 
 # 2.1 - Open elevation file.
 # NB: Material folder must be stored in working directory. A .gitignore file can be used to ignore this folder
 # when pushing to GitHub. The Material folder cannot be uploaded to GitHub because file sizes are greater than 100MB.
-elevation_asc = rasterio.open(os.path.join('Material', 'elevation', 'SZ.asc'))
-elevation_array = elevation_asc.read(1,
-                                     window=windows.from_bounds((p.x - 5000), (p.y - 5000), (p.x + 5000), (p.y + 5000)))
+
+with rasterio.open(os.path.join('Material', 'elevation', 'SZ.asc')) as elevation_asc:
+    elevation_array = elevation_asc.read(1, window=rasterio.windows.from_bounds((p.x - 5000.0), (p.y - 5000.0),
+                                                                                (p.x + 5000.0), (p.y + 5000.0),
+                                                                                elevation_asc.transform))
 # Create buffer around point.
-buffer_5km = p.buffer(5000)
+buffer_5km = [p.buffer(5000)]
+
+#cropped_elevation_array = rasterio.mask.mask(dataset=elevation_array, nodata=0, shapes=buffer_5km, crop=True, filled=True)
+
+#rasterio.plot.show(cropped_elevation_array)
