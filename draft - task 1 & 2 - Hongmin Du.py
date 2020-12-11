@@ -39,15 +39,10 @@ p = Point(float(input('Please input the value of your easting (use British Natio
 
 testing_area = Polygon([(430000, 80000), (430000, 95000), (465000, 95000), (465000, 80000)])
 
-
-def check_point_in_box(point, polygon):
-    if point.within(polygon):
-        print("This location can be tested by this software!")
-    else:
-        print("This location is outside the testing area! Please enter another location!")
-
-
-check_point_in_box(p, testing_area)
+if p.within(testing_area):
+    print("This location can be tested by this software!")
+else:
+    print("This location is outside the testing area! Please enter another location!")
 
 # Task 2. Highest Point Identification.
 # In this task, this software should:
