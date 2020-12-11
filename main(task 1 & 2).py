@@ -29,23 +29,23 @@ print("This software will give the quickest route from the user's current locati
 print("Firstly, let's check whether your location is included in the testing area!")
 
 # 1.2 Let the user input the easting of British National Grid and test
-coord=input("Please input easting of British National Grid:\n")
+coord = input("Please input easting of British National Grid:\n")
 easting = int(coord)
 if 430000 <= easting <= 465000:
     pass
     print("This easting is included in the testing area!")
 else:
-    print("Easting not in 430000 465000, please inter another easting!")
+    print("Easting is not in between 430000 and 465000, please inter another easting!")
     exit(0)
 
 # 1.3 Let the user input the northing of British National Grid and test
-coord=input("Please input northing of British National Grid:\n")
+coord = input("Please input northing of British National Grid:\n")
 northing = int(coord)
 if 80000 <= northing <= 95000:
     pass
     print("This northing is included in the testing area!")
 else:
-    print("Northing not in 80000 95000, please inter another northing!")
+    print("Northing is not in between 80000 and 95000, please inter another northing!")
     exit(0)
     
 # 1.4 Print the point of user's location
