@@ -43,8 +43,8 @@ class Point:
 
 # 1.2 - Let the user input the easting and northing and test whether the point is in the testing area
 # Notice: the easting and northing should follow the style of British National Grid
-easting = float(input('Please input the value of easting: '))
-northing = float(input('Please input the value of northing: '))
+easting = int(input('Please input the value of easting: '))
+northing = int(input('Please input the value of northing: '))
 p = Point(easting, northing)
 
 
