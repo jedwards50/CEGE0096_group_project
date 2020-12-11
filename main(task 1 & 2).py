@@ -55,7 +55,7 @@ p = Point(easting, northing)
 # 2.0 - Introduction
 print("Secondly, let's find the highest point within a 5km radius from the user location!")
 
-# 2.1 Limit the size of the elevation array
+
 source = r'.\Material\elevation\SZ.asc'
 asc_header = [getline(source, i) for i in range(1, 6)]
 header_values = [int(h.split(" ")[-1].strip()) for h in asc_header]
@@ -73,7 +73,6 @@ end_col = asc_index_x + 1000 + 1
 # print(start_col, end_col)
 # print(max_rows, rows_to_skip)
 
-# 2.2 Create the 5km buffer to clip the elevation array
 elev_arr = np.loadtxt(r'.\Material\elevation\SZ.asc', skiprows=rows_to_skip, max_rows=max_rows, usecols=range(start_col,end_col))
 # print(elev_arr.max())
 # print(elev_arr.shape)
