@@ -1,26 +1,27 @@
-# GEOG0096 - 2nd Assignment (Group Programming Project)
+# CEGE0096 - 2nd Assignment (Group Programming Project)
 # Task 1 & 2 - Drafts
-# Student Name: Hongmin Du
-# Student Number: 20066724
 
 # The ideas of making those codes mainly referred to the lecture slides and Jupyter Notebook notes.
 # Official tutorials of used python packages were also referred.
-# This software should be run with the given materials, some packages for GIS will need to be imported before running this project.
+# This software should be run with the given materials, some packages for GIS will need to be imported
+# before running this project.
 
 
 # 0.1 - Import required packages for the following steps
 import math
 from linecache import getline
 import numpy as np
-ELEVATION_RADIUS = 5000
+
+elevation_radius = 5000
 
 # 0.2 - Title for the software and its background:
-print("**** GEOG0096 Assignement 2 - Flood Emergency Planning - Dragonfly (0.1) ****")
+print("**** CEGE0096 Assignment 2 - Flood Emergency Planning - Dragonfly (0.1) ****")
 print()
-print("Extreme flooding is expected on the Isle of Wightand, and the authority in charge of planning the emergency response is advising everyone to proceed by foot to the nearest high ground.")
-print("This software will give the quickest route from the user's current location to the highest point within a 5km radius in the chosen area.")
+print("Extreme flooding is expected on the Isle of Wight and, and the authority in charge of planning the "
+      "emergency response is advising everyone to proceed by foot to the nearest high ground.")
+print("This software will give the quickest route from the user's current location to the highest point "
+      "within a 5km radius in the chosen area.")
 print()
-
 
 # Task 1. User Input
 # In this task, this software should:
@@ -30,8 +31,10 @@ print()
 # 1.0 - Introduction
 print("Firstly, let's check whether your location is included in the testing area!")
 
+
 # 1.1 - Define: Point
-# The user should input the number of both easting and northing to make a point for the location in the following checks.
+# The user should input the number of both easting and northing to make a point
+# for the location in the following checks.
 class Point:
     def __init__(self, easting, northing):
         self.easting = easting
@@ -41,12 +44,12 @@ class Point:
         else:
             print("This location is outside the testing area! Please enter another location!")
 
+
 # 1.2 - Let the user input the easting and northing and test whether the point is in the testing area
 # Notice: the easting and northing should follow the style of British National Grid
-easting = int(input('Please input the value of easting: '))
-northing = int(input('Please input the value of northing: '))
-p = Point(easting, northing)
-
+user_easting = int(input('Please input the value of easting: '))
+user_northing = int(input('Please input the value of northing: '))
+p = Point(user_easting, user_northing)
 
 # Task 2. Highest Point Identification
 # In this task, this software should:
@@ -62,25 +65,26 @@ header_values = [int(h.split(" ")[-1].strip()) for h in asc_header]
 cols, rows, lx, ly, cell = header_values
 # print("header_values")
 # print(header_values)
-asc_index_x = math.floor((easting - lx) // cell)
-asc_index_y = math.floor((northing - ly) // cell)
+asc_index_x = math.floor((p.easting - lx) // cell)
+asc_index_y = math.floor((p.northing - ly) // cell)
 # print("asc_index_x", "asc_index_y")
 # print(asc_index_x, asc_index_y)
-rows_to_skip = 5 + asc_index_x - (ELEVATION_RADIUS // cell)
-max_rows = (ELEVATION_RADIUS // cell) * 2 + 1
+rows_to_skip = 5 + asc_index_x - (elevation_radius // cell)
+max_rows = (elevation_radius // cell) * 2 + 1
 start_col = asc_index_x - 1000
 end_col = asc_index_x + 1000 + 1
 # print(start_col, end_col)
 # print(max_rows, rows_to_skip)
 
 # 2.2 - Get the highest point 
-elev_arr = np.loadtxt(r'.\Material\elevation\SZ.asc', skiprows=rows_to_skip, max_rows=max_rows, usecols=range(start_col,end_col))
+elev_arr = np.loadtxt(r'.\Material\elevation\SZ.asc', skiprows=rows_to_skip, max_rows=max_rows,
+                      usecols=range(start_col, end_col))
 # print(elev_arr.max())
 # print(elev_arr.shape)
 highest_elevation = np.unravel_index(elev_arr.argmax(), elev_arr.shape)
 # print(highest_elevation)
-h_x_index = highest_elevation[1] - (ELEVATION_RADIUS // cell) * 2
-h_y_index = highest_elevation[0] - (ELEVATION_RADIUS // cell) * 2
+h_x_index = highest_elevation[1] - (elevation_radius // cell) * 2
+h_y_index = highest_elevation[0] - (elevation_radius // cell) * 2
 bng_easting = (h_x_index + asc_index_x) * cell + lx
 bng_northing = (h_y_index + asc_index_y) * cell + ly
 print((bng_easting, bng_northing))
