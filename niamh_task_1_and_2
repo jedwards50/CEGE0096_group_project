@@ -70,6 +70,9 @@ src = rasterio.open(os.path.join('Material', 'elevation', 'SZ.asc'))
 elevation_array = src.read(1, window=rasterio.windows.from_bounds((p.x - 5000.0), (p.y - 5000.0),
                                                                   (p.x + 5000.0), (p.y + 5000.0),
                                                                   src.transform))
+                                                                  
+""" NB: THE ELEVATION_ARRAY CAN'T BE USED WITH RASTERIO.MASK. THIS MAKES THE PROGRAM VERY SLOW BECAUSE THE WHOLE ASC FILE IS PROCESSED INSTEAD OF JUST
+THE WINDOW OF THE FILE ALLOCATED TO ELEVATION_ARRAY. I DON'T KNOW HOW TO GET AROUND THIS PROBLEM. ALDO RECOMMENDS USING RASTERIO.WINDOWS."""
 # Create buffer around point.
 buffer_5km = p.buffer(5000)
 
