@@ -45,6 +45,12 @@ if 80000 <= northing <= 95000:
 else:
     print("Northing not in 80000 95000, please inter another northing!")
     exit(0)
+    
+# 1.2.3 Print the point of user's location
+p = (easting, northing)
+print("According to the British National Grid, the user's location is:")
+print(p)
+print("This inputted location is included in the testing area, and could be test in the following steps!")
 
 
 # Task 2. Highest Point Identification
