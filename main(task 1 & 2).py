@@ -52,6 +52,9 @@ p = Point(easting, northing)
 # In this task, this software should:
 # Identify the highest point within a 5km radius from the user location.
 
+# 2.0 - Introduction
+print("Secondly, let's find the highest point within a 5km radius from the user location!")
+
 # 2.1 Limit the size of the elevation array
 source = r'.\Material\elevation\SZ.asc'
 asc_header = [getline(source, i) for i in range(1, 6)]
