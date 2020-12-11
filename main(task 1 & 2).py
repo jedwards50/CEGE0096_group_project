@@ -23,8 +23,9 @@ ELEVATION_RADIUS = 5000
 # Test whether the user is within a box (430000, 80000) and (465000, 95000)
 
 # 1.1 Introduction: 
-print("Extreme flooding is expected on the Isle of Wightand, the authority in charge of planning the emergency response is advising everyone to proceed by foot to the nearest high ground.")
-print("This software will give the quickest route from the user's current location to the highest point within a 5km radius in the chosen area .")
+print("Extreme flooding is expected on the Isle of Wightand.") 
+print("the authority in charge of planning the emergency response is advising everyone to proceed by foot to the nearest high ground.")
+print("This software will give the quickest route from the user's current location to the highest point within a 5km radius in the chosen area.")
 print("Firstly, let's check whether your location is included in the testing area!")
 
 # 1.2 Let the user input the easting of British National Grid and test
