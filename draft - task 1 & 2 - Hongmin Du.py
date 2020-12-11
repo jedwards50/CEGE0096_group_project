@@ -9,7 +9,7 @@
 
 # 0.1 - Import required packages for the following steps
 import os
-
+import numpy as np
 import rasterio
 from rasterio import mask, plot, windows
 from shapely.geometry import Point, Polygon
@@ -64,13 +64,18 @@ print("Secondly, let's find the highest point within a 5km radius from the user 
 # NB: Material folder must be stored in working directory. A .gitignore file can be used to ignore this folder
 # when pushing to GitHub. The Material folder cannot be uploaded to GitHub because file sizes are greater than 100MB.
 
-with rasterio.open(os.path.join('Material', 'elevation', 'SZ.asc')) as elevation_asc:
-    elevation_array = elevation_asc.read(1, window=rasterio.windows.from_bounds((p.x - 5000.0), (p.y - 5000.0),
-                                                                                (p.x + 5000.0), (p.y + 5000.0),
-                                                                                elevation_asc.transform))
+with rasterio.open(os.path.join('Material', 'elevation', 'SZ.asc')) as src:
+    elevation_array = src.read(1, window=rasterio.windows.from_bounds((p.x - 5000.0), (p.y - 5000.0),
+                                                                      (p.x + 5000.0), (p.y + 5000.0),
+                                                                      src.transform))
 # Create buffer around point.
 buffer_5km = [p.buffer(5000)]
 
-#cropped_elevation_array = rasterio.mask.mask(dataset=elevation_array, nodata=0, shapes=buffer_5km, crop=True, filled=True)
+max_ele_value = np.max(elevation_array)
+max_ele_index = np.where(elevation_array == np.max(elevation_array))
 
-#rasterio.plot.show(cropped_elevation_array)
+print("The maximum elevation within 5km of your point is ", max_ele_value, "it's index (row,column) is", max_ele_index)
+# cropped_elevation_array = rasterio.mask.mask(dataset=elevation_array, nodata=0, shapes=buffer_5km, crop=True,
+# filled=True)
+
+# rasterio.plot.show(cropped_elevation_array)
