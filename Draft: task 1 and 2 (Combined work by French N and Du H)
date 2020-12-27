@@ -76,16 +76,14 @@ buffer_5km = p.buffer(5000)
 # Notice: Have not gotten the full idea for this part!! Still need more changes!! 
 
 with rasterio.open(os.path.join(source)) as src:
-    w = src.read(1, window=window((p.x - 5000.0), (p.y - 5000.0), (p.x + 5000.0), (p.y + 5000.0)))
+    w = src.read(1, window=window((p.x - 5000.0), (p.y - 5000.0), (p.x + 5000.0), (p.y + 5000.0), src.transform))
 
-# Find point of maximum elevation.
+# 2.4 - Find point of maximum elevation.
 max_ele_value = np.max(buffered_ele[0])
 max_ele_index = np.where(buffered_ele[0] == np.max(buffered_ele[0]))
 
 print("The maximum elevation within 5km of your point is ", max_ele_value, "m. It's index is", max_ele_index)
 
-# Plot the buffered raster.
+# 2.5 - Plot the buffered raster.
 rasterio.plot.show(buffered_ele[0])
-
-
 
